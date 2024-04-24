@@ -1,0 +1,59 @@
+package com.example.project1301.Activity;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.LinearLayout;
+
+import com.example.project1301.Adapter.FoodListAdapter;
+import com.example.project1301.Domain.FoodDomain;
+import com.example.project1301.R;
+
+import java.util.ArrayList;
+
+public class MainActivity extends AppCompatActivity {
+    private RecyclerView.Adapter adapterFoodList;
+    private RecyclerView recyclerViewFood;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        initRecyclerview();
+        bottomNavigation();
+    }
+
+    private void bottomNavigation() {
+        LinearLayout homeBtn=findViewById(R.id.homeBtn);
+        LinearLayout cartBtn=findViewById(R.id.cartBtn);
+
+        homeBtn.setOnClickListener(v -> startActivity(new Intent(MainActivity.this,MainActivity.class)));
+
+        cartBtn.setOnClickListener(v -> startActivity(new Intent(MainActivity.this,CartActivity.class)));
+    }
+
+    private void initRecyclerview() {
+        ArrayList<FoodDomain> items=new ArrayList<>();
+        items.add(new FoodDomain("Cheese Burger","Satisface tus antojos con nuestra jugosa Cheese Burger.. \n" +
+                "Hecha con 100% Angus con carne de res Angus y cubierta con\n" +
+                " queso cheddar derretido, lechuga fresca, tomate y\n" +
+                " nuestra salsa secreta, esta hamburguesa clásica te dejará\n" +
+                " queriendo más. Servida con papas fritas crujientes y una bebida,\n" +
+                " es la comida perfecta para cualquier ocasión.","fast_1",15,20,120,4));
+        items.add(new FoodDomain("Pizza Peperoni","Disfruta de un sabor italiano con nuestra deliciosa Pizza Pepperoni. Hecha con masa recién preparada, salsa de tomate picante, queso mozzarella y cubierta con rodajas de pepperoni picante, esta pizza seguramente será del agrado de todos. Perfectamente horneada en un horno de leña, es la elección perfecta para un almuerzo rápido o una cena familiar."
+                ,"fast_2",10,25,200,5));
+        items.add(new FoodDomain("Vegetable Pizza","¿Buscas una opción más saludable? Prueba nuestra Pizza de Vegetales, hecha con una variedad de vegetales frescos como pimientos, cebollas, champiñones, aceitunas y tomates. Cubierta con queso mozzarella y una salsa de tomate picante, esta pizza está llena de sabor y bondad. Perfecta para vegetarianos y para aquellos que desean agregar más verduras a su dieta."
+                ,"fast_3",13,30,100,4.5));
+
+        recyclerViewFood=findViewById(R.id.view1);
+        recyclerViewFood.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
+
+        adapterFoodList=new FoodListAdapter(items);
+        recyclerViewFood.setAdapter(adapterFoodList);
+    }
+}
